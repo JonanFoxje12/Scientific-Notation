@@ -1,0 +1,103 @@
+<html>
+    <head>
+        <title>Scientific Notation</title>
+        <meta charset="utf-8">
+        <style>
+            #sciInput1 {
+                width: 30px;
+            }
+
+            #sciInput2 {
+                width: 17px;
+                font-size: 10px;
+            }
+
+            #sciInput1::-webkit-inner-spin-button,
+            #sciInput1::-webkit-outer-spin-button,
+            #sciInput2::-webkit-inner-spin-button,
+            #sciInput2::-webkit-outer-spin-button{
+                -webkit-appearance: none;
+            }
+
+            #scientific {
+                display: inline-block
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Scientific Notation</h1>
+        <h3>Number to scientific notation</h3>
+        <label for="numInput">Number input:&nbsp;</label>
+        <input type="number" id="numInput" min="0"><br>
+        <input type="button" value="Convert" onclick="toScientific()">
+        <p id="output"></p>
+
+        <h3>Scientific notation to number</h3>
+        <label for="sciInput1">Scientific notation input:&nbsp;</label>
+        <input type="number" id="sciInput1" min="0">
+        <p id="scientific">·10</p>
+        <sup><input type="number" id="sciInput2"></sup><br>
+        <input type="button" value="Calculate" onclick="toNumber()">
+        <p id="outputNum"></p>
+        <script>
+            const numInput = document.getElementById("numInput");
+            const output = document.getElementById("output");
+
+            const sciInput1 = document.getElementById("sciInput1");
+            const sciInput2 = document.getElementById("sciInput2");
+            const outputNum = document.getElementById("outputNum");
+
+            function toScientific() {
+                let num = numInput.value
+                let originalNum = num
+                let factor = 0
+                if (num >= 1) {
+                    factor = num.toString().length - 1
+                    num = num / Math.pow(10, factor)
+                }
+
+                if (num < 1) {
+                    while (num < 1) {
+                        num *= 10
+                        factor -= 1
+                    }
+                }
+                
+                output.innerHTML = num.toFixed(1) + "·10<sup>" + factor + "</sup>"
+            }
+
+            function toNumber() {
+                let num = sciInput1.value
+                let factor = sciInput2.value
+                let result = num * Math.pow(10, factor)
+                outputNum.textContent = result
+            }
+
+            numInput.addEventListener("keydown", e => {
+                if (e.key == "Enter") {
+                    toScientific()
+                }
+            })
+
+            sciInput1.addEventListener("keydown", e => {
+                if (e.key == "Enter") {
+                    let num1 = sciInput1.value
+                    let num2 = sciInput2.value
+                    if ((num1 != null && num1 > 0) && num2 != null) {
+                        toNumber()
+                    }
+                }
+            })
+
+            sciInput2.addEventListener("keydown", e => {
+                if (e.key == "Enter") {
+                    let num1 = sciInput1.value
+                    let num2 = sciInput2.value
+                    if ((num1 != null && num1 > 0) && num2 != null) {
+                        toNumber()
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
