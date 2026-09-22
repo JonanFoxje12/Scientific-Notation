@@ -51,19 +51,24 @@
                 let num = numInput.value
                 let originalNum = num
                 let factor = 0
-                if (num >= 1) {
-                    factor = num.toString().length - 1
-                    num = num / Math.pow(10, factor)
-                }
-
-                if (num < 1) {
-                    while (num < 1) {
-                        num *= 10
-                        factor -= 1
+                if (num > 0) {
+                    if (num >= 1) {
+                        factor = num.toString().length - 1
+                        num = num / Math.pow(10, factor)
                     }
+
+                    if (num < 1) {
+                        while (num < 1) {
+                            num *= 10
+                            factor -= 1
+                        }
+                    }
+                    output.style.color = "black"
+                    output.innerHTML = num.toFixed(1) + "·10<sup>" + factor + "</sup>"
+                } else {
+                    output.style.color = "red"
+                    output.innerHTML = "Please insert a number higher then 0."
                 }
-                
-                output.innerHTML = num.toFixed(1) + "·10<sup>" + factor + "</sup>"
             }
 
             function toNumber() {
